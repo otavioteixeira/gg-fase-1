@@ -35,15 +35,13 @@ public class ProjetoDesafio4Application {
     }
 
     private void sendPOST() throws IOException, InterruptedException {
-
-        // json formatted data
+        System.out.println("Request POST");
         String json = new StringBuilder()
                 .append("{")
                 .append("\"id\":\"123\",")
                 .append("\"field\":\"testing\"")
                 .append("}").toString();
 
-        // add json header
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .uri(URI.create("https://httpbin.org/post"))
@@ -53,15 +51,14 @@ public class ProjetoDesafio4Application {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // print status code
         System.out.println(response.statusCode());
 
-        // print response body
         System.out.println(response.body());
 
     }
 
     private void sendDELETE() throws IOException, InterruptedException {
+        System.out.println("Request DELETE");
         HttpRequest request = HttpRequest.newBuilder()
                 .DELETE()
                 .uri(URI.create("https://httpbin.org/delete"))
@@ -70,28 +67,23 @@ public class ProjetoDesafio4Application {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // print status code
         System.out.println(response.statusCode());
 
-        // print response body
         System.out.println(response.body());
     }
 
     private void sendBEARER() throws IOException, InterruptedException {
+        System.out.println("Request BEARER");
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create("https://httpbin.org/bearer"))
-                .setHeader("User-Agent", "Java 11 HttpClient Bot") // add request header
+                .header("Authorization", "Bearer my secret-token")
                 .build();
 
         HttpResponse<String> response = httpClientBearer.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // print status code
         System.out.println(response.statusCode());
 
-        // print response body
         System.out.println(response.body());
     }
-
-
 }
